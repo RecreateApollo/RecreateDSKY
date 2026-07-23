@@ -1,0 +1,40 @@
+{
+    "compatible_printers": [
+        "Elegoo Neptune 4 (0.4 nozzle)"
+    ],
+    "fan_max_speed": [
+        "80"
+    ],
+    "fan_min_speed": [
+        "80"
+    ],
+    "filament_deretraction_speed": [
+        "20"
+    ],
+    "filament_retraction_length": [
+        "2.8"
+    ],
+    "filament_retraction_speed": [
+        "40"
+    ],
+    "filament_settings_id": [
+        "Overture TPU Custom"
+    ],
+    "filament_z_hop": [
+        "0"
+    ],
+    "filament_z_hop_types": [
+        "Auto Lift"
+    ],
+    "from": "User",
+    "inherits": "Overture TPU @System",
+    "is_custom_defined": "0",
+    "name": "Overture TPU Custom",
+    "nozzle_temperature": [
+        "215"
+    ],
+    "nozzle_temperature_initial_layer": [
+        "215"
+    ],
+    "version": "2.3.0.4"
+}

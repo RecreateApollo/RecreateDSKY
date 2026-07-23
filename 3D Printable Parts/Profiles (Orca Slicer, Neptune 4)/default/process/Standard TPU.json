@@ -1,0 +1,14 @@
+{
+    "from": "User",
+    "inherits": "0.20mm Standard @Elegoo Neptune4 (0.4 nozzle)",
+    "initial_layer_infill_speed": "30",
+    "initial_layer_speed": "30",
+    "inner_wall_speed": "30",
+    "is_custom_defined": "0",
+    "name": "Standard TPU",
+    "outer_wall_speed": "30",
+    "print_settings_id": "Standard TPU",
+    "top_surface_speed": "30",
+    "travel_speed": "200",
+    "version": "2.3.0.4"
+}
