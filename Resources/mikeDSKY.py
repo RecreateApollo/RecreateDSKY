@@ -108,7 +108,7 @@ class DSKYRouter:
         self.plus_minus = [0, 0, 0]
         self.agc_vn_flash = False
         
-        # Flasher state
+        # yaAGC Flasher state
         self.flash_state = True
         self.last_flash = time.time()
 
@@ -123,7 +123,9 @@ class DSKYRouter:
             logging.info("=== SWITCHED MODE TO: NASSP (PC) ===")
             self.panel_ser.write(self.last_nassp_frame) 
 
+    # ---------------------------------------------------------
     # yaAGC Logic
+    # ---------------------------------------------------------
     def packetize_agc(self, tup: Tuple[int, int, int]) -> None:
         """Encodes keystrokes into the strictly formatted 4-byte yaAGC structure."""
         out = bytearray(4)
@@ -242,7 +244,9 @@ class DSKYRouter:
             if self.current_mode == "YAAGC": 
                 self.panel_ser.write(tosend)
 
+    # ---------------------------------------------------------
     # NASSP Logic
+    # ---------------------------------------------------------
     @staticmethod
     def format_nassp_pair(raw_val: Any) -> str:
         """
@@ -267,17 +271,19 @@ class DSKYRouter:
         fmask = 0
         try: 
             fmask = int(str(state.get("flashing", 0)).strip())
-        except ValueError: 
+        except (ValueError, TypeError): 
             pass
 
-        if not self.flash_state:
-            if fmask & 0x1: verb, noun = "  ", "  "
-            if fmask & 0x2: prog = "  "
+        # NASSP fmask modulation
+        if fmask & 0x1:
+            verb, noun = "  ", "  "
+        if fmask & 0x2:
+            prog = "  "
 
         comp_val = 0
         try: 
             comp_val = int(str(state.get("compLight", 0)).strip())
-        except ValueError: 
+        except (ValueError, TypeError): 
             pass
 
         buf = ["0"] * 38
@@ -297,7 +303,7 @@ class DSKYRouter:
                     buf[base + j] = " "
             else:
                 sign = raw[0] if raw[0] in "+-" else " "
-                mag = "".join(filter(str.isdigit, raw)).rjust(5, "0")[-5:]
+                mag = "".join(filter(str.isdigit, raw)).ljust(5, " ")[:5]
                 reg = sign + mag
                 for j, ch in enumerate(reg): 
                     buf[base + j] = ch
@@ -330,7 +336,7 @@ class DSKYRouter:
                 self.reset_is_active = False 
                 self.toggle_mode()
 
-            # Global Flasher Clock
+            # Global Flasher Clock (yaAGC)
             if now - self.last_flash >= 0.6:
                 self.flash_state = not self.flash_state
                 self.last_flash = now
