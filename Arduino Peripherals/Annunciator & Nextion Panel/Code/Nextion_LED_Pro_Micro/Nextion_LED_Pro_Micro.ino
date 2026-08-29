@@ -93,7 +93,9 @@ void handle_handshake_and_test() {
 
         // Hardware Self-Test
         if (peek_char == 't' || peek_char == 'T') {
-            Serial.read(); // Consume trigger
+            while (Serial.available() > 0) {
+                Serial.read(); // Flush buffer
+            }
             execute_self_test();
         }
         // WHOAMI Handshake Routine
